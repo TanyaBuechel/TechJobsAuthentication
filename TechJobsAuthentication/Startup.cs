@@ -26,6 +26,7 @@ namespace TechJobsAuthentication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
             var defaultConnection = Configuration.GetConnectionString("DefaultConnection");
@@ -51,6 +52,7 @@ namespace TechJobsAuthentication
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -58,6 +60,8 @@ namespace TechJobsAuthentication
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }
